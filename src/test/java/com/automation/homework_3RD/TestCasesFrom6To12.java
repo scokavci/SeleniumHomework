@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utilities.BrowserUtils;
 
@@ -84,49 +85,25 @@ public class TestCasesFrom6To12 {
         Assert.assertEquals(actual,expected,"it's not matching");
 
     }
-    @Test (description="test case #9")
-    public void verifyStatusMessage200(){
+    @Test (description="testCases #9-12 of verifying message ", dataProvider = "testData")
+    public void verifyStatusMessage200(String number, String message){
         driver.get(URL);
         driver.findElement(By.linkText("Status Codes")).click();
-        driver.findElement(By.linkText("200")).click();
+        driver.findElement(By.linkText(number)).click();
         BrowserUtils.wait(3);
-        WebElement message = driver.findElement(By.tagName("p"));
-        String actual = message.getText();
-        String expected = "This page returned a 200 status code";
+        WebElement displaymessage = driver.findElement(By.tagName("p"));
+        String actual = displaymessage.getText();
+        String expected = message ;
         Assert.assertTrue(actual.contains(expected));
     }
-    @Test (description ="test case #10")
-    public void verifyStatusMessage301() {
-        driver.get(URL);
-        driver.findElement(By.linkText("Status Codes")).click();
-        driver.findElement(By.linkText("301")).click();
-        BrowserUtils.wait(3);
-        WebElement message = driver.findElement(By.tagName("p"));
-        String actual = message.getText();
-        String expected = "This page returned a 301 status code";
-        Assert.assertTrue(actual.contains("This page returned a 301 status code"));
-    }
-    @Test (description ="test case #11")
-    public void verifyStatusMessage404() {
-        driver.get(URL);
-        driver.findElement(By.linkText("Status Codes")).click();
-        driver.findElement(By.linkText("404")).click();
-        BrowserUtils.wait(3);
-        WebElement message = driver.findElement(By.tagName("p"));
-        String actual = message.getText();
-        String expected = "This page returned a 404 status code";
-        Assert.assertTrue(actual.contains("This page returned a 404 status code"));
-    }
-    @Test (description ="test case #12")
-    public void verifyStatusMessage1() {
-        driver.get(URL);
-        driver.findElement(By.linkText("Status Codes")).click();
-        driver.findElement(By.linkText("500")).click();
-        BrowserUtils.wait(3);
-        WebElement message = driver.findElement(By.tagName("p"));
-        String actual = message.getText();
-        String expected = "This page returned a 500 status code";
-        Assert.assertTrue(actual.contains("This page returned a 500 status code"));
+
+    @DataProvider(name = "testData")
+    public Object[][] testData(){
+        return new Object[][]{ {"200","This page returned a 200 status code" },
+                               {"301","This page returned a 301 status code" },
+                               {"404","This page returned a 404 status code" },
+                               {"500","This page returned a 500 status code" }
+        };
     }
 
 
