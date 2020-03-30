@@ -86,7 +86,7 @@ public class TestCasesFrom6To12 {
 
     }
     @Test (description="testCases #9-12 of verifying message ", dataProvider = "testData")
-    public void verifyStatusMessage200(String number, String message){
+    public void verifyStatusMessage(String number, String message){
         driver.get(URL);
         driver.findElement(By.linkText("Status Codes")).click();
         driver.findElement(By.linkText(number)).click();
